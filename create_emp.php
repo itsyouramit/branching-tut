@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $department 	= 	$_POST["department"];
     $role 			= 	$_POST["role"];
     $email 			= 	$_POST["email"];
-   
+	
     $password1 		= 	$_POST["password1"];
     $password2		= 	$_POST["password2"];  
-         
+     
 	
 	$pwd = password_hash($password1, PASSWORD_BCRYPT);
 	$cpwd = password_hash($password2, PASSWORD_BCRYPT);	
@@ -204,12 +204,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 														<?php for($j=1;$j<=$count2;$j++){
 															$data2 = mysqli_fetch_assoc($result2);
 															?>														
-															<option name="catagory" value="<?php echo $data2["role"];?>" ><?php echo $data2["role"]; ?></option>
+															<option name="catagory" value="<?php echo $data2["id"];?>" ><?php echo $data2["role_name"]; ?></option>
 															<?php } ?>
 														
 													</select>
 												</div>
                                              </div>
+
+
+
+
+
+
+
                                       
                                             </div>
 

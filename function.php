@@ -13,7 +13,56 @@ function AllDepartment($conn,$query){
 	   return $data;	
 }
 
+function dep($conn){
+	
+	
+	$pro_id = $_SESSION["ROLE"]; 
+	 $q2 = "SELECT * FROM employee_table INNER JOIN department_table ON employee_table.department=department_table.department WHERE role =$pro_id";
+	 $res = mysqli_query($conn,$q2);
+	 $data = mysqli_fetch_assoc($res);
+	 return $data;
+	}
 
+
+//function to access employee's role detail from employee and role table
+function role($conn){
+	$pro_id = $_SESSION["ROLE"]; 
+		 $q2 = "SELECT * FROM employee_table INNER JOIN role_table ON employee_table.role=role_table.id WHERE role = $pro_id";
+		 $res = mysqli_query($conn,$q2);
+		 $data = mysqli_fetch_assoc($res);
+		 return $data;
+	}
+	 
+	 
+	 //~ echo "<pre>";
+	 //~ print_r($dep_role);
+	 //~ exit();
+
+
+//function to access employee's project detail from project table
+function pro_detail($conn){
+	$id = $_GET['id'];
+	$q1="SELECT * FROM project_table WHERE id ='$id'";
+	
+	$query = mysqli_query($conn,$q1);
+	$rows = mysqli_fetch_array($query);
+	return $rows;
+	}
+
+
+
+
+//function to access detail of employee from employee table
+function detail($conn){
+	
+$name= $_SESSION['FIRSTNAME'];	
+
+$q2 = "SELECT * FROM employee_table INNER JOIN project_table ON employee_table.firstname=project_table.hired_by OR employee_table.firstname=project_table.team_leder OR employee_table.firstname=project_table.project_manager WHERE firstname ='$name'";	
+$res = mysqli_query($conn,$q2);
+$row = mysqli_fetch_assoc($res);	
+	return $row;
+	
+	}
 
 //total no. of employee
 function total_emp($conn){  
@@ -62,8 +111,12 @@ function AllRole($conn,$query){
 }
 
 
+
+
+
+
 function all_TL($conn){  
-	$query = "SELECT * FROM employee_table WHERE role='TEAM LEADER PHP'";
+	$query = "SELECT * FROM employee_table WHERE role='36'";
 	$result = mysqli_query($conn,$query);
 	$count = 0;
 	   $data = array();
@@ -76,7 +129,7 @@ function all_TL($conn){
 
 
 function all_manager($conn){  
-	$query = "SELECT * FROM employee_table WHERE role='Project Manager php'";
+	$query = "SELECT * FROM employee_table WHERE role='37'";
 	$result = mysqli_query($conn,$query);
 	$count = 0;
 	   $data = array();
@@ -198,7 +251,6 @@ function Employee($conn,$query){
 
 
 
-
 /*validation function*/
 
 function test_input($data) {
@@ -299,8 +351,8 @@ function validate_client($conn){
 			} else {
 			$age_name = test_input($_POST["age_name"]);
 			
-			if (!preg_match("/^[0-9]*$/",$age_name)){
-			$error[] = "Only number are allowed";
+			if (!preg_match("/^[a-zA-Z]*$/",$age_name)){
+			$error[] = "Only letters allowed";
 			}
 		}
 		
@@ -636,7 +688,7 @@ function update_emp($conn){
 
 		$upload_dir = 'uploads'.DIRECTORY_SEPARATOR; 
 		$maxsize = 2 * 1024 * 1024;
-		$allowed_types = array('jpg', 'png', 'jpeg','txt','pdf','exl','doc');
+		$allowed_types = array('jpg', 'png', 'jpeg','txt','pdf','exl','doc','php');
 		
 		
 		if(!empty(array_filter($_FILES['files']['name']))) { 
@@ -664,8 +716,7 @@ function update_emp($conn){
 			
 		  }else{
 				$error[] ="no files are selected";
-			 }	
-					
+			 }		
 	return $error;
 			
 	}

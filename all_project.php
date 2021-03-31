@@ -62,22 +62,21 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 
 
 					<div class="container-fluid">
-                      
-
                         <div class="card mb-4">
-                   
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>SL No.</th>
-                                  
                                                 <th>Project Title</th>
                                                 <th>Client Name</th>
                                                 <th>Site URL</th>
                                                 <th>Status</th>
+                                                 <?php if ($_SESSION["ROLE"] == 1) { ?>
+												<th>Update</th>
                                                 <th>Delete</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                  
@@ -97,21 +96,21 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 												<td><?php echo $rows["client_name"]?></td>
 												<td><?php echo $rows["url"]?></td>
 												<td><?php echo $rows["status"]?></td>
-												<!--
+												<?php if ($_SESSION["ROLE"] == 1) { ?>
 												<td>
 													<btn>
-														<a class="btn btn-primary" href="update_emp.php?id=<?php echo $rows["id"];?>&firstname=<?php echo $rows["firstname"]?>&lastname=<?php echo $rows["lastname"]?>&joining_date=<?php echo $rows["joining_date"]?>
+														<a class="btn btn-primary" href="update_pro.php?id=<?php echo $rows["id"];?>&firstname=<?php echo $rows["firstname"]?>&lastname=<?php echo $rows["lastname"]?>&joining_date=<?php echo $rows["joining_date"]?>
 														&emp_id=<?php echo $rows["emp_id"]?>&dob=<?php echo $rows["dob"]?>
 														&department=<?php echo $rows["department"]?>&role=<?php echo $rows["role"]?>
 														&email=<?php echo $rows["email"];?>">Update</a>
 													</btn>
-												</td> -->	
-							
-												<td >
+												</td> 	
+											
+												<td > 
 													<btn>
 														<a class="btn btn-danger" href="delete_project.php?id=<?php echo $rows['id'];?>"onclick="conf_delete()">Delete</a>
-													</btn>
 												</td>
+												</btn> <?php } ?>
 											</tr>
 											
 										<?php } ?>                             
@@ -125,16 +124,14 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 										for($page_no = 1; $page_no<= $total_page; $page_no++) {  	
 										echo '<a href = "all_emp.php?page=' . $page_no . '">' . $page_no . ' </a>';
 										}
+										
 									?>                                    
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                        
+									</div>
+								</div>
+							</div>
+						</div>
                     </div>
                 </main>
                 <!-- footer start  -->

@@ -16,10 +16,6 @@ $all_TL=all_TL($conn);
 $all_manager=all_manager($conn);
 
 
-//~ echo "<pre>";
-//~ print_r($all_manager);
-//~ exit();
-
 
 $AllEmployee=AllEmployee($conn);
 
@@ -101,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     <div class="container-fluid">
                         
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Project Details</li>
+                            <li class="breadcrumb-item active">Update Project</li>
                         </ol>
 					<div class="container">
                         <div class="row justify-content-center">
@@ -118,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 							<?php } ?>		
 
 
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-2">Project Details</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-2">Update Project</h3></div>
                                     <div class="card-body">
 										<!-- form start here-->
                                         <form method="POST" enctype="multipart/form-data">
@@ -231,16 +227,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 										   <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Project Manager</label>
                                                      <select id="mngr" name="project_manager" class="form-control py-2">
-
+															
+															<option value="0">Select Project Manager</option>
+															
+															
+<!--
                                                             <option value="">Select Project Manager</option>
-
+-->
                                                             <?php foreach($all_manager as $rows1){?>
-
+<!--
                                                                 <option value="<?php echo $rows1["firstname"];?>"><?php echo $rows1["firstname"]?>
                                                                 </option>
-
+-->
                                                                <?php } ?>
-
+                                                               
+                                                               
+                                                               
+                                                               
+      
                                                         </select>            
 													</div>
 											</div>
@@ -327,16 +331,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 						
 							var len = data.length;
 							
-							
+							console.log(len);
 
 							$("#bidder").empty();
 							for( var i = 0; i<len; i++){
 								
 								var id = data[i]['id'];
 								var name = data[i]['firstname'];
-								
-								$("#bidder").append("<option value='"+name+"'>"+name+"</option>");
+									
+								$("#bidder").append("<option value='"+id+"'>"+name+"</option>");
 								}
+								
+							//~ $.ajzx({
+								
+								 //~ $("#mngr").empty();
+									 //~ for(var j=0;j<len; j++){
+									 //~ var role = data[j]['role'];
+									 //~ var firstname = data[j]['firstname'];
+									 //~ $("#mngr").append("<option value='"+role+"'>"+firstname+"</option>");
+									 //~ }								
+								
+								
+								
+								
+								//~ });	
+								
+	
 								
 							}
 					});

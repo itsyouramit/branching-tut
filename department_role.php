@@ -69,40 +69,40 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
                             <li class="breadcrumb-item active">Department Role List</li>
                         </ol>
 
-
-							<table class="table">
-							  <thead >
-								<tr>
-								  <th scope="col">Serial No</th>
-								  <th scope="col">Department Role</th>
-								  <th scope="col">Update</th>
-								  <th scope="col">Delete</th>					  
-								</tr>
-							  </thead>
-							  <tbody>
+						
+						<div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+									
+									<table  class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									  <thead >
+										<tr>
+										  <th scope="col">Serial No</th>
+										  <th scope="col">Department Role</th>
+										  <?php if ($_SESSION["ROLE"] == 1) { ?>
+										  <th scope="col">Update</th>
+										  <th scope="col">Delete</th>
+										  <?php } ?>					  
+										</tr>
+									  </thead>
+									  <tbody>
 								  
-									<?php
-									
-									$q1 = "SELECT * FROM role_table LIMIT $record_per_page OFFSET $start_no";
-									$query = mysqli_query($conn,$q1);
-									
-									
-																		
+										<?php
+											$q1 = "SELECT * FROM role_table LIMIT $record_per_page OFFSET $start_no";
+											$query = mysqli_query($conn,$q1);
+											while($rows = mysqli_fetch_array($query)){
+												$count++;  ?>
 										
-										while($rows = mysqli_fetch_array($query)){
-											$count++;
-										?>
-	
 										<tr>
 										<td><?php echo $count; ?></td>
-										<td><?php echo $rows["role"]?></td>
+										<td><?php echo $rows["role_name"]?></td>
+										<?php if ($_SESSION["ROLE"] == 1) { ?>
 										<td ><btn><a  class="btn btn-primary" href="update_role.php?id=<?php echo $rows["id"];?>&role=<?php echo $rows["role"]?>">Update</a></btn></td>							
 										
 										<td ><btn><a  class="btn btn-danger" href="delete_role.php?id=<?php echo $rows["id"];?>"onclick="conf_delete()">Delete</btn></td>
-
+										<?php } ?>
 										</tr>
-									<?php 
-									} ?>
+									<?php } ?>
 		
 							  </tbody>
 							</table>
@@ -113,6 +113,9 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 										}
 									?>                                    
                                     </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <!-- footer start  -->

@@ -8,11 +8,9 @@ if(!isset($_SESSION["ROLE"])){
     die();
 	}
 
-$q1 = "SELECT * FROM `employee_table`";
+$q1 = "SELECT * FROM `employee_table` INNER JOIN `role_table` ON employee_table.role=role_table.id";
 $result = mysqli_query($conn,$q1);
 $rowcount = mysqli_num_rows($result);
-
-
 
 
 
@@ -67,8 +65,11 @@ $rowcount = mysqli_num_rows($result);
                                                 <th>Name</th>
                                                 <th>Department</th>
                                                 <th>Role</th>
+                                                
+                                                <?php if ($_SESSION["ROLE"] == 1) { ?>
                                                 <th>Update</th>
                                                 <th>Delete</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                  
@@ -76,7 +77,7 @@ $rowcount = mysqli_num_rows($result);
 											
             
 									<?php 
-										$q1 = "SELECT * FROM employee_table LIMIT $record_per_page OFFSET $start_no";
+										$q1 = "SELECT * FROM `employee_table` INNER JOIN `role_table` ON employee_table.role=role_table.id  LIMIT $record_per_page OFFSET $start_no";
 										$query = mysqli_query($conn,$q1);
 										
 									
@@ -89,21 +90,26 @@ $rowcount = mysqli_num_rows($result);
 												<td><?php echo $rows["firstname"]?></td>
 												
 												<td><?php echo $rows["department"]?></td>
-												<td><?php echo $rows["role"]?></td>
-												<td>
+												<td><?php echo $rows["role_name"]?></td>
+												<?php if ($_SESSION["ROLE"] == 1) { ?>
+												<td> 
 													<btn>
 														<a class="btn btn-primary" href="update_emp.php?id=<?php echo $rows["id"];?>&firstname=<?php echo $rows["firstname"]?>&lastname=<?php echo $rows["lastname"]?>&joining_date=<?php echo $rows["joining_date"]?>
 														&emp_id=<?php echo $rows["emp_id"]?>&dob=<?php echo $rows["dob"]?>
 														&department=<?php echo $rows["department"]?>&role=<?php echo $rows["role"]?>
 														&email=<?php echo $rows["email"];?>">Update</a>
 													</btn>
+													
 												</td>	
 							
 												<td >
 													<btn>
 														<a class="btn btn-danger" href="delete_emp.php?id=<?php echo $rows['id'];?>"onclick="conf_delete()">Delete</a>
 													</btn>
+													
 												</td>
+												<?php } ?>
+												
 											</tr>
 											
 										<?php } ?>                             

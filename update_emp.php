@@ -3,8 +3,6 @@ session_start();
 include_once "db_connection.php";
 include_once "function.php";
 
-
-//error_reporting(0);
 if(!isset($_SESSION["ROLE"])){
 	header("location:login.php");
     die();
@@ -240,19 +238,7 @@ if(isset($_POST["update"])){
 
                     </div>
                 </main>
-                  <div>
-					<?php echo $ErrorMsg;?><br>
-					<?php echo $nameErr1;?><br>
-					<?php echo $nameErr2;?><br>
-					<?php echo $dateErr; ?><br>
-					
-					<?php echo $idErr;?><br>
-					<?php echo $dobErr;?><br>
-					<?php echo $depErr; ?><br>
-					<?php echo $rolErr;?><br>
-					<?php echo $emailErr;?><br>
-					<?php echo $passErr;?>
-				</div>
+
                 <!-- footer start  -->
                 <?php include "footer.php"; ?> 
 

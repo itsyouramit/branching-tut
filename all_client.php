@@ -71,8 +71,10 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
                                                 <th>Client Name</th>
                                                 <th>Department</th>
                                                 <th>Agency Name</th>
+                                                <?php if ($_SESSION["ROLE"] == 1) { ?>
                                                 <th>Update</th>
                                                 <th>Delete</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                  
@@ -87,16 +89,14 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 										 								
 										while($rows = mysqli_fetch_array($query)){
 											$count++;
-											
-											
-	
-											
+
 										 ?>
 											<tr>
 												<td><?php echo $count;?></td>
 												<td><?php echo $rows["first_name"]?></td>
 												<td><?php echo $rows["department"]?></td>
 												<td><?php echo $rows["age_name"]?></td>
+												<?php if ($_SESSION["ROLE"] == 1) { ?>
 												<td>
 													<btn>
 														<a class="btn btn-primary" href="update_client.php?id=<?php echo $rows["id"];?>&firstname=<?php echo $rows["first_name"]?>&lastname=<?php echo $rows["last_name"]?>&joindate=<?php echo $rows["joining_date"]?>
@@ -111,7 +111,7 @@ if(isset($_GET["page"]) && $_GET["page"]!=1)
 														<a class="btn btn-danger" href="delete_client.php?id=<?php echo $rows['id'];?>"onclick="conf_delete()">Delete</a>
 													</btn>
 												</td>
-		
+												<?php } ?>
 											</tr>
 											
 										<?php 

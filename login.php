@@ -16,17 +16,28 @@ if (isset($_POST["login"])) {
      $useremail = mysqli_escape_string($conn, $email);  
      $userpass  = mysqli_escape_string($conn, $pass);
 
-     $q1 = "SELECT * FROM admin_table WHERE email = '".$useremail."' and password = '".$userpass."'";
+     //$q1 = "SELECT * FROM admin_table WHERE email = '".$useremail."' and password = '".$userpass."'";
+    $q1 = "SELECT * FROM employee_table WHERE email = '".$useremail."' and password1 = '".$userpass."'";
+    //$q1 = "SELECT * FROM employee_table INNER JOIN role_table ON employee_table.role=role_table.id WHERE email = '".$useremail."' and password1 = '".$userpass."'";
 
      $res = mysqli_query($conn,$q1);
      $count = mysqli_num_rows($res);
 	 $rows = mysqli_fetch_assoc($res);
+	 
+
+
      
      if ($count>0) {
 		 
-		$_SESSION["USERNAME"] 	= $rows["username"];
-		$_SESSION["PASSWORD"] 	= $rows["password"];
+
+		 
+		$_SESSION["ID"] 		= $rows["id"];
+		$_SESSION["FIRSTNAME"] 	= $rows["firstname"];
+		$_SESSION["LASTNAME"] 	= $rows["lastname"];
+		$_SESSION["PASSWORD"] 	= $rows["password1"];
         $_SESSION["ROLE"] 		= $rows["role"];
+        $_SESSION["DEPARTMENT"] = $rows["department"];
+        $_SESSION["ROLENAME"] 	= $data["role_name"];
         $_SESSION["IS_LOGIN"] 	= "yes";
 		
 		if(!empty($_POST["remember"])){
@@ -39,19 +50,20 @@ if (isset($_POST["login"])) {
 				echo '<script>alert("Department Created Successfully ")</script>';
 				}
 			
-			if ($rows["role"] == 1) {
+			if ($rows["role"] == 1 || $rows['role'] == 36 || $rows['role'] == 37 || $rows['role'] == 38|| $rows['role'] == 40|| $rows['role'] == 41 ||$rows["role"] == 43) {
 				header("location:index.php");
 				die();
-			}elseif ($rows["role"] == 2) {
-				header("location:index.php");
-				die();
-			}else{
-				header("location:base.php");
+			}
+			else{
+				header("location:login.php");
 				die();
 			}
 
+
      }else{
         echo "Invalid Creditantials";
+
+        
      }
 
 
@@ -70,6 +82,11 @@ if (isset($_POST["login"])) {
         <title>login</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+			.row.justify-content-center {
+			margin-top: 97px;
+			}
+        </style>
     </head>
     <body class="bg-primary">
         <div id="layoutAuthentication">
@@ -86,12 +103,12 @@ if (isset($_POST["login"])) {
                                         <form method="POST">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control py-4" id="inputEmailAddress" type="email" placeholder="Enter email address" name="email" 
+                                                <input class="form-control py-2" id="inputEmailAddress" type="email" placeholder="Enter email address" name="email" 
                                                 value="<?php if(isset($_COOKIE["email"])) {echo $_COOKIE["email"];} ?>"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" name="password" 
+                                                <input class="form-control py-2" id="inputPassword" type="password" placeholder="Enter password" name="password" 
                                                 value="<?php if(isset($_COOKIE["password"])) {echo $_COOKIE["password"];} ?>"/>
                                             </div>
                                             <div class="form-group">
@@ -105,6 +122,8 @@ if (isset($_POST["login"])) {
                                                 <input type="submit" class="btn btn-primary" name="login" value="login">
                                             </div>
                                         </form>
+
+
 
 
                                     </div>
@@ -126,6 +145,9 @@ if (isset($_POST["login"])) {
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                            <div>
+
                             </div>
                         </div>
                     </div>
